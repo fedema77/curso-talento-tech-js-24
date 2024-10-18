@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Gastos Diarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 0;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .gastos {
+            margin-top: 30px;
+        }
+
+        .gasto-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 5px solid #4CAF50;
+            text-align: left;
+            border-radius: 4px;
+        }
+
+        .gasto-item h4 {
+            margin: 0 0 5px;
+        }
+
+        .gasto-item span {
+            color: #888;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Registro de Gastos Diarios</h1>
+    </header>
+
+    <div class="container">
+        <div class="form-group">
+            <label for="descripcion">Descripción del gasto:</label>
+            <input type="text" id="descripcion" placeholder="Ej: Almuerzo, Transporte...">
+        </div>
+        <div class="form-group">
+            <label for="monto">Monto ($):</label>
+            <input type="number" id="monto" placeholder="Ej: 100, 200...">
+        </div>
+        <button class="btn" id="agregarGasto">Agregar Gasto</button>
+
+        <div class="gastos" id="listaGastos">
+            <!-- Aquí aparecerán los gastos -->
+        </div>
+
+        <div class="total" id="totalGastos">Total Gastado: $0</div>
+    </div>
+
+    <script>
+        document.getElementById('agregarGasto').addEventListener('click', function() {
+            const descripcion = document.getElementById('descripcion').value;
+            const monto = parseFloat(document.getElementById('monto').value);
+
+            if (descripcion && monto > 0) {
+                // Crear un nuevo elemento de gasto
+                const nuevoGasto = document.createElement('div');
+                nuevoGasto.classList.add('gasto-item');
+                nuevoGasto.innerHTML = `<h4>${descripcion}</h4><span>$${monto.toFixed(2)}</span>`;
+
+                // Añadir el gasto a la lista
+                document.getElementById('listaGastos').appendChild(nuevoGasto);
+
+                // Actualizar el total
+                actualizarTotal(monto);
+
+                // Limpiar los campos
+                document.getElementById('descripcion').value = '';
+                document.getElementById('monto').value = '';
+            } else {
+                alert('Por favor, ingrese una descripción y un monto válido.');
+            }
+        });
+
+        function actualizarTotal(monto) {
+            const totalGastosElement = document.getElementById('totalGastos');
+            let totalActual = parseFloat(totalGastosElement.innerText.replace('Total Gastado: $', ''));
+            totalActual += monto;
+            totalGastosElement.innerText = `Total Gastado: $${totalActual.toFixed(2)}`;
+        }
+    </script>
+
+</body>
+</html>
